@@ -1,0 +1,126 @@
+<include file="Public/head"/>
+<body class="no-skin">
+<include file="Public/header"/>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <include file="Public/sidebar"/>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <include file="Public/breadcrumbs"/>
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <include file="Public/set"/>
+
+
+                <form class="form-horizontal" id="form" name="form" action="{:u('exchangeinfo')}" method="post">
+                    <div class="input-group col-xs-5" style="margin-bottom: 20px;">
+
+                        <input placeholder="起始时间" id="star" name="star" value="" data-date-format="dd-mm-yyyy" type="text">
+    -
+                        <input placeholder="结束时间" id="end" name="end" value="" data-date-format="dd-mm-yyyy" type="text">
+
+
+                        &nbsp; &nbsp; &nbsp;<button class="btn btn-info submit" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            搜索</button>
+
+                    </div>
+                </form>
+
+                <table class="table table-bordered">
+
+                    <thead>
+                    <tr>
+
+                        <th>直播时间</th>
+                        <th>直播时长</th>
+
+                    </tr>
+                    </thead>
+
+                    <volist name="list" id="val">
+                    <tbody>
+                    <tr>
+                        <td>{$val['start_time']}-{$val['end_time']}</td>
+                        <td>{$val['end_time']}</td>
+                    </tr>
+                    </tbody>
+                    </volist>
+                </table>
+                {$page}
+
+
+
+
+            </div><!-- /.page-content -->
+
+
+
+        </div>
+    </div><!-- /.main-content -->
+    <include file="Public/footer"/>
+
+</div><!-- /.main-container -->
+
+<include file="Public/footerjs"/>
+<script src="__PUBLIC__/qwadmin/js/bootbox.js"></script>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    $(".children").click(function () {
+        $(this).parent().parent().parent().parent().find(".father").prop("checked", true);
+    })
+    $(".father").click(function () {
+        if (this.checked) {
+            $(this).parent().parent().parent().parent().find(".children").prop("checked", true);
+        } else {
+            $(this).parent().parent().parent().parent().find(".children").prop("checked", false);
+        }
+    })
+    $(".submit").click(function () {
+        var title = $("#title").val();
+        if (title == '') {
+            bootbox.dialog({
+                message: "用户组名称不能为空。",
+                buttons: {
+                    "success": {
+                        "label": "确定",
+                        "className": "btn-danger"
+                    }
+                }
+            });
+            return;
+        }
+        $('#form').submit();
+
+    })
+</script>
+<script src="__PUBLIC__/qwadmin/js/date-time/bootstrap-datepicker.js"></script>
+<script src="__PUBLIC__/qwadmin/js/function.js"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#star').datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            autoclose: true,
+            todayBtn: 'linked',
+            language: 'cn'
+        });
+        $('#end').datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            autoclose: true,
+            todayBtn: 'linked',
+            language: 'cn'
+        });
+    });
+</script>
+</body>
+</html>
